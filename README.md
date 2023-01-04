@@ -1,2 +1,2 @@
 # nnfs.io
-Learning to make neural network form scratch from this book https://nnfs.io/
+Learning to make neural network from scratch with this book https://nnfs.io/
