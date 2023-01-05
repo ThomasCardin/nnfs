@@ -1,25 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"github.com/ThomasCardin/nnfs/pkg/batches"
 	"gonum.org/v1/gonum/mat"
 )
 
 func main() {
-	inputs := mat.NewVecDense(4, []float64{1.0, 2.0, 3.0, 2.5})
-	weights := []*mat.VecDense{
-		mat.NewVecDense(4, []float64{0.2, 0.8, -0.5, 1.0}),
-		mat.NewVecDense(4, []float64{0.5, -0.91, 0.26, -0.5}),
-		mat.NewVecDense(4, []float64{-0.26, -0.27, 0.17, 0.87}),
-	}
+	X := mat.NewDense(3, 4, []float64{1, 2, 3, 2.5, 2.0, 5.0, -1.0, 2.0, -1.5, 2.7, 3.3, -0.8}) // "data set"
 
-	output := mat.NewVecDense(3, nil)
-	biases := mat.NewVecDense(3, []float64{2.0, 3.0, 0.5})
+	layerDense1 := batches.CreateLayerDense(4, 5)
+	layerDense1.Forward(X)
+	layerDense1.ToString()
 
-	for i := range weights {
-		res := mat.Dot(inputs, weights[i])
-		output.SetVec(i, res+biases.AtVec(i))
-	}
-
-	fmt.Println(output.RawVector().Data)
+	layerDense2 := batches.CreateLayerDense(5, 2)
+	layerDense2.Forward(&layerDense1.Output)
+	layerDense2.ToString()
 }
